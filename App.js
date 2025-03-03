@@ -92,14 +92,38 @@ const SignIn = ({ navigation }) => {
 };
 
 const number = ({ navigation }) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  const validatePhoneNumber = (phone) => {
+    // Biểu thức Regex kiểm tra số điện thoại Việt Nam
+    const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
+
+    if (phoneRegex.test(phone)) {
+      setErrorMessage('Số điện thoại hợp lệ!');
+
+      
+    } else {
+      setErrorMessage('Số điện thoại không hợp lệ!');
+    }
+  };
+
   return(
     <View style={styles.numberContainer}>
-      <Text>
-        <TouchableOpacity style={styles.btnBack} onPress={() => navigation.navigate('SignIn')} >
-          <Text>{'<'}</Text>
-        </TouchableOpacity>
-      </Text>
-      <Text style={styles.mobileNumberText}>Nhập số điện thoại của bạn</Text>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('SignIn')}>
+        <Text style={styles.backButtonText}>{'<'}</Text>
+      </TouchableOpacity>
+      <Text style={styles.mobileNumberText}>Enter your number mobile</Text>
+      <Text style={styles.mobileNumberText1}>Mobile Number</Text>
+      <TextInput
+          style={styles.input1}
+          keyboardType="phone-pad"
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+      />
+      <TouchableOpacity style={styles.nextButton} onPress={() => validatePhoneNumber(phoneNumber)}>
+        <Text style={styles.nextButtonText}>{'>'}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -290,8 +314,22 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:'#fcfcfc'
   },
+  backButton: {
+    marginTop: 56.83,
+    marginLeft: 25.01,
+    width: 45,
+    height: 44,
+  },
+  backButtonText: {
+    fontFamily: 'Gilroy',
+    fontWeight: '600',
+    fontSize: 26,
+    lineHeight: 29,
+    letterSpacing: 0,
+    color: '#181725',
+  },
   mobileNumberText: {
-    marginTop: 140.02,
+    marginTop: 120,
     marginLeft: 25,
     fontFamily: 'Gilroy',
     fontWeight: '600',
@@ -299,8 +337,46 @@ const styles = StyleSheet.create({
     lineHeight: 29,
     letterSpacing: 0,
     color: '#181725',
-    
   },
+  mobileNumberText1:{
+    marginTop: 20,
+    marginLeft: 24.88,
+    fontFamily: 'Gilroy',
+    fontWeight: '600',
+    fontSize: 16,
+    lineHeight: 29,
+    letterSpacing: 0,
+    color: '#7C7C7C',
+  },
+  input1: {
+    width: 364,
+    height: 39.550201416015625,
+    marginTop: 320,
+    marginLeft: 25,
+    borderBottomWidth: 1,
+    borderColor:' #E2E2E2',
+    position:'absolute'
+  },
+  nextButton: {
+    marginTop: 250,
+    marginLeft: 322,
+    width: 67,
+    height: 67,
+    borderRadius:'100%',
+    backgroundColor:'#5eb078'
+  },
+  nextButtonText: {
+    fontFamily: 'Gilroy',
+    fontWeight: '600',
+    fontSize: 26,
+    lineHeight: 29,
+    letterSpacing: 0,
+    color: '#181725',
+    textAlign:'center',
+    paddingTop:16,
+    color:'white'
+  },
+
 });
 
 export default App;
