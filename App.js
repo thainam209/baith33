@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
@@ -101,8 +101,7 @@ const number = ({ navigation }) => {
 
     if (phoneRegex.test(phone)) {
       setErrorMessage('Số điện thoại hợp lệ!');
-
-      
+      navigation.navigate('verification')
     } else {
       setErrorMessage('Số điện thoại không hợp lệ!');
     }
@@ -121,6 +120,11 @@ const number = ({ navigation }) => {
           value={phoneNumber}
           onChangeText={setPhoneNumber}
       />
+      {errorMessage ? (
+        <Text style={errorMessage.includes('Số điện thoại hợp lệ!') ? styles.successMessage : styles.errorMessage}>
+          {errorMessage}
+        </Text>
+      ) : null}
       <TouchableOpacity style={styles.nextButton} onPress={() => validatePhoneNumber(phoneNumber)}>
         <Text style={styles.nextButtonText}>{'>'}</Text>
       </TouchableOpacity>
@@ -128,19 +132,51 @@ const number = ({ navigation }) => {
   );
 };
 
-const verification = () => {
-  <View style={styles.numberContainer}>
-    <Text>hakhfkaf</Text>
-  </View>
+const verification = ({ navigation }) => {
+  const [codeNumber, setcodeNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  const validateCodeNumber = (code) => {
+
+    if (code.length==4) {
+      setErrorMessage('Mã code hợp lệ!');
+    } else {
+      setErrorMessage('Mã code không hợp lệ!');
+    }
+  };
+
+  return(
+    <View style={styles.numberContainer}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('number')}>
+        <Text style={styles.backButtonText}>{'<'}</Text>
+      </TouchableOpacity>
+      <Text style={styles.mobileNumberText}>Enter your 4-digit code</Text>
+      <Text style={styles.mobileNumberText1}>Code</Text>
+      <TextInput
+          style={styles.input1}
+          keyboardType="phone-pad"
+          value={codeNumber}
+          onChangeText={setcodeNumber}
+      />
+      {errorMessage ? (
+        <Text style={errorMessage.includes('Mã code hợp lệ!') ? styles.successMessage : styles.errorMessage}>
+          {errorMessage}
+        </Text>
+      ) : null}
+      <TouchableOpacity style={styles.nextButton} onPress={() => validateCodeNumber(codeNumber)}>
+        <Text style={styles.nextButtonText}>{'>'}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="FirstScreen">
-        {/* <Stack.Screen name="FirstScreen" component={FirstScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="FirstScreen" component={FirstScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} />
-        <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} /> */}
+        <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
         <Stack.Screen name="number" component={number} options={{ headerShown: false }} />
         <Stack.Screen name="verification" component={verification} options={{ headerShown: false }} />
       </Stack.Navigator>
@@ -358,7 +394,7 @@ const styles = StyleSheet.create({
     position:'absolute'
   },
   nextButton: {
-    marginTop: 250,
+    marginTop: 220,
     marginLeft: 322,
     width: 67,
     height: 67,
@@ -376,7 +412,14 @@ const styles = StyleSheet.create({
     paddingTop:16,
     color:'white'
   },
-
+  successMessage: {
+    color: 'green',
+    paddingLeft:25
+  },
+  errorMessage: {
+    color: 'red',
+    paddingLeft:25
+  }
 });
 
 export default App;
