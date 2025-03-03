@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,38 +61,64 @@ const SignIn = ({ navigation }) => {
   return (
     <View style={styles.SignInContainer}>
       <Image
-        source={require('./assets/bg_signin.png')}
-        style={styles.signinimg}
+          source={require('./assets/bg_signin.png')}
+          style={styles.signinimg}
       />
-      {/* <Text style={styles.title}>Get your groceries with nectar</Text>
-      <Text style={styles.countryCode}>Bangladesh +880</Text>
-      
+      <Text style={styles.title}>
+        Get your groceries 
+      </Text>
+      <Text style={styles.title1}>
+        with nectar
+      </Text>
       <TextInput
-        style={styles.input}
-        placeholder="Enter your phone number"
-        keyboardType="phone-pad"
+          style={styles.input}
+          placeholder="Enter your phone number"
+          keyboardType="phone-pad"
       />
-      
       <Text style={styles.socialMediaText}>Or connect with social media</Text>
+      <View style={styles.buttonContainer}>
       
-      <TouchableOpacity style={styles.googleButton}>
-        <Text style={styles.buttonText}>G Continue with Google</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.googleButton} onPress={() => navigation.navigate('number')}>
+          <Text style={styles.ggbtnText}>Continue with Google</Text>
+        </TouchableOpacity>
       
-      <TouchableOpacity style={styles.facebookButton}>
-        <Text style={styles.buttonText}>Continue with Facebook</Text>
-      </TouchableOpacity> */}
+        <TouchableOpacity style={styles.facebookButton} onPress={() => navigation.navigate('number')}>
+          <Text style={styles.fbbtnText}>Continue with Facebook</Text>
+        </TouchableOpacity>
+      
+      </View>
     </View>
   );
+};
+
+const number = ({ navigation }) => {
+  return(
+    <View style={styles.numberContainer}>
+      <Text>
+        <TouchableOpacity style={styles.btnBack} onPress={() => navigation.navigate('SignIn')} >
+          <Text>{'<'}</Text>
+        </TouchableOpacity>
+      </Text>
+      <Text style={styles.mobileNumberText}>Nhập số điện thoại của bạn</Text>
+    </View>
+  );
+};
+
+const verification = () => {
+  <View style={styles.numberContainer}>
+    <Text>hakhfkaf</Text>
+  </View>
 };
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="FirstScreen">
-        <Stack.Screen name="FirstScreen" component={FirstScreen} options={{ headerShown: false }} />
+        {/* <Stack.Screen name="FirstScreen" component={FirstScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Onboarding" component={Onboarding} options={{ headerShown: false }} />
-        <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+        <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} /> */}
+        <Stack.Screen name="number" component={number} options={{ headerShown: false }} />
+        <Stack.Screen name="verification" component={verification} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -179,60 +205,101 @@ const styles = StyleSheet.create({
   },
   SignInContainer:{
     flex:1,
-    backgroundColor: '#fcfcfc'
+    backgroundColor: '#fcfcfc',
+    position:'relative'
   },
   signinimg: {
     width: 413.36627197265625,
     height: 374.151611328125,
     marginTop: 30,
-    backgroundColor: '#fcfcfc'
+    backgroundColor: '#fcfcfc',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '600',
-    marginTop: 160, // Khoảng cách từ hình nền
-    color: '#333',
+    marginTop: 400,
+    marginLeft: 25,
+    fontFamily: 'Gilroy',
+    fontWeight: 600,
+    fontSize: 26,
+    lineHeight: 29,
+    letterSpacing: 0,
+    color: ' #030303',
+    position:'absolute'
   },
-  countryCode: {
-    fontSize: 16,
-    color: '#888',
-    marginVertical: 10,
+  title1: {
+    marginTop: 430,
+    marginLeft: 25,
+    fontFamily: 'Gilroy',
+    fontWeight: 600,
+    fontSize: 26,
+    lineHeight: 29,
+    letterSpacing: 0,
+    color: ' #030303',
+    position:'absolute'
   },
   input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    width: '100%',
-    marginTop: 20,
+    width: 364,
+    height: 39.550201416015625,
+    marginTop: 490,
+    marginLeft: 25,
+    borderBottomWidth: 1,
+    borderColor:' #E2E2E2',
+    position:'absolute'
   },
   socialMediaText: {
     fontSize: 16,
     color: '#888',
-    marginVertical: 20,
+    position: 'absolute',
+    width: 220,
+    height: 17,
+    marginTop: 565,
+    marginLeft: 100,
+
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    marginLeft:30
   },
   googleButton: {
-    backgroundColor: '#fff',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingVertical: 15,
-    width: '100%',
-    alignItems: 'center',
-    marginVertical: 10,
+    width: 364,
+    height: 67,
+    backgroundColor:'#5683e8',
+    position:'absolute',
+  },
+  ggbtnText:{
+    color:'white',
+    textAlign: 'center',
+    fontSize:18,
+    fontWeight:600,
+    paddingTop:20,
   },
   facebookButton: {
-    backgroundColor: '#3b5998',
-    borderRadius: 10,
-    paddingVertical: 15,
-    width: '100%',
-    alignItems: 'center',
-    marginVertical: 10,
+    width: 364,
+    height: 67,
+    backgroundColor: '#4b66a9',
+    marginTop:150
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+  fbbtnText:{
+    color:'white',
+    textAlign: 'center',
+    fontSize:18,
+    fontWeight:600,
+    paddingTop:20,
+  },
+  numberContainer: {
+    flex:1,
+    backgroundColor:'#fcfcfc'
+  },
+  mobileNumberText: {
+    marginTop: 140.02,
+    marginLeft: 25,
+    fontFamily: 'Gilroy',
+    fontWeight: '600',
+    fontSize: 26,
+    lineHeight: 29,
+    letterSpacing: 0,
+    color: '#181725',
+    
   },
 });
 
